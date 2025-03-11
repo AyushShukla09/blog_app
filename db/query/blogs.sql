@@ -18,7 +18,8 @@ UPDATE blog_posts
 SET
     title = $1,
     description = $2,
-    body = $3
+    body = $3,
+    updated_at = $4
 WHERE
-    id = $4
+    id = $5
 RETURNING *;

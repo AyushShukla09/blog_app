@@ -7,6 +7,7 @@ package db
 
 import (
 	"context"
+	"time"
 )
 
 const createBlog = `-- name: CreateBlog :one
@@ -102,17 +103,19 @@ UPDATE blog_posts
 SET
     title = $1,
     description = $2,
-    body = $3
+    body = $3,
+    updated_at = $4
 WHERE
-    id = $4
+    id = $5
 RETURNING id, title, description, body, created_at, updated_at
 `
 
 type UpdateBlogParams struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Body        string `json:"body"`
-	ID          int64  `json:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Body        string    `json:"body"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	ID          int64     `json:"id"`
 }
 
 func (q *Queries) UpdateBlog(ctx context.Context, arg UpdateBlogParams) (BlogPost, error) {
@@ -120,6 +123,7 @@ func (q *Queries) UpdateBlog(ctx context.Context, arg UpdateBlogParams) (BlogPos
 		arg.Title,
 		arg.Description,
 		arg.Body,
+		arg.UpdatedAt,
 		arg.ID,
 	)
 	var i BlogPost
