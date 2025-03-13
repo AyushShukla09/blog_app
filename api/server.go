@@ -17,10 +17,11 @@ func NewServer(db *db.Queries) *chi.Mux {
 		queries: db,
 		router:  router,
 	}
-	router.Post("/blog", server.CreateBlog)
+	router.Use(LoggingMiddleware)
+	router.With(ValidatePostMiddleware).Post("/blog", server.CreateBlog)
 	router.Get("/blogs", server.GetAllBlogs)
 	router.Get("/blog/{id}", server.GetBlog)
 	router.Delete("/blog/{id}", server.DeleteBlog)
-	router.Put("/blog/{id}", server.UpdateBlog)
+	router.With(ValidatePostMiddleware).Put("/blog/{id}", server.UpdateBlog)
 	return server.router
 }
