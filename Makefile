@@ -22,4 +22,7 @@ test:
 up:
 	go run main.go
 
+swag:
+	swag init --outputTypes go
+
 .PHONY: postgres createdb dropdb migrateup migratedown sqlc up

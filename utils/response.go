@@ -9,7 +9,7 @@ import (
 type Response struct {
 	Status string          `json:"status"`
 	Error  *ResponseError  `json:"error,omitempty"`
-	Result json.RawMessage `json:"result,omitempty"`
+	Result json.RawMessage `json:"result,omitempty"  swaggertype:"primitive,object"`
 }
 
 type ResponseError struct {
