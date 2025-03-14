@@ -7,7 +7,7 @@ import (
 )
 
 type Server struct {
-	queries *db.Queries
+	queries db.Repo
 	router  *chi.Mux
 }
 
